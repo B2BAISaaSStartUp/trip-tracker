@@ -1,0 +1,54 @@
+# ---------- .NET ----------
+bin/
+obj/
+*.user
+*.suo
+*.userprefs
+.vs/
+*.DotSettings.user
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+coverage.cobertura.xml
+publish/
+*.nupkg
+
+# ---------- IDE ----------
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+.DS_Store
+Thumbs.db
+
+# ---------- Flutter / Dart ----------
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+**/android/.gradle/
+**/android/local.properties
+**/android/app/debug/
+**/android/app/profile/
+**/android/app/release/
+**/android/key.properties
+*.jks
+*.keystore
+*.iml
+**/ios/Pods/
+**/ios/Flutter/Generated.xcconfig
+
+# ---------- Secrets / environment ----------
+.env
+*.env
+!*.env.example
+!.env.example
+appsettings.*.local.json
+secrets.json
+
+# ---------- Docker volumes ----------
+deploy/local/data/
