@@ -11,7 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\TripTracker.SharedKernel\TripTracker.SharedKernel.csproj" />
+    <ProjectReference Include="..\Modules\Trips\TripTracker.Trips.csproj" />
   </ItemGroup>
 
 </Project>
