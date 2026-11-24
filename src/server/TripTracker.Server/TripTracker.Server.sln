@@ -9,12 +9,24 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripTracker.Api", "TripTrac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripTracker.DataAccess", "TripTracker.DataAccess\TripTracker.DataAccess.csproj", "{2EA9D494-0CEE-400D-BF83-3E06204E6A29}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripTracker.Trips", "Modules\Trips\TripTracker.Trips.csproj", "{0A7D5726-717B-4D0F-A611-59F37FEA8326}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripTracker.Trips.Tests", "..\..\..\tests\TripTracker.Trips.Tests\TripTracker.Trips.Tests.csproj", "{5B1E6C3A-9D42-4F0E-8A57-3C6D2E91B7F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0A7D5726-717B-4D0F-A611-59F37FEA8326}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A7D5726-717B-4D0F-A611-59F37FEA8326}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A7D5726-717B-4D0F-A611-59F37FEA8326}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A7D5726-717B-4D0F-A611-59F37FEA8326}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B1E6C3A-9D42-4F0E-8A57-3C6D2E91B7F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B1E6C3A-9D42-4F0E-8A57-3C6D2E91B7F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B1E6C3A-9D42-4F0E-8A57-3C6D2E91B7F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B1E6C3A-9D42-4F0E-8A57-3C6D2E91B7F4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{48AAFB2F-5F79-46C2-AEE8-025968FD60BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{48AAFB2F-5F79-46C2-AEE8-025968FD60BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48AAFB2F-5F79-46C2-AEE8-025968FD60BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
