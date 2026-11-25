@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TripTracker.Framework\TripTracker.Framework.csproj" />
     <ProjectReference Include="..\Modules\Identity\TripTracker.Identity.csproj" />
     <ProjectReference Include="..\Modules\Photos\TripTracker.Photos.csproj" />
     <ProjectReference Include="..\TripTracker.SharedKernel\TripTracker.SharedKernel.csproj" />
