@@ -1,0 +1,86 @@
+@page "/login"
+@using System.ComponentModel.DataAnnotations
+@using TripTracker.SharedKernel.TripTracker.Identity
+@inject IApiClient Api
+@inject IAuthSession Session
+@inject NavigationManager Navigation
+
+<PageTitle>Log in - TripTracker</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.ExtraSmall" Class="px-0">
+    <MudText Typo="Typo.h4" HtmlTag="h1" GutterBottom="true">Log in</MudText>
+    <ErrorAlert Errors="_errors" />
+    <MudForm @ref="_form" OnEnterPressed="SubmitAsync" Spacing="3">
+        <MudTextField @bind-Value="_email"
+                      Label="E-mail"
+                      InputType="InputType.Email"
+                      Required="true"
+                      RequiredError="E-mail is required"
+                      Validation="@(new Func<string?, string?>(ValidateEmail))"
+                      autocomplete="email" />
+        <MudTextField @bind-Value="_password"
+                      Label="Password"
+                      InputType="InputType.Password"
+                      Required="true"
+                      RequiredError="Password is required"
+                      autocomplete="current-password" />
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   FullWidth="true"
+                   Disabled="_busy"
+                   OnClick="SubmitAsync">
+            Log in
+        </MudButton>
+    </MudForm>
+    <MudText Class="mt-4">No account yet? <MudLink Href="register" Underline="Underline.Always">Register</MudLink></MudText>
+</MudContainer>
+
+@code {
+    private MudForm _form = default!;
+    private string? _email;
+    private string? _password;
+    private bool _busy;
+    private IReadOnlyList<ApiError> _errors = [];
+
+    private static string? ValidateEmail(string? email) =>
+        string.IsNullOrWhiteSpace(email) || new EmailAddressAttribute().IsValid(email.Trim())
+            ? null
+            : "Enter a valid e-mail address";
+
+    private async Task SubmitAsync()
+    {
+        if (_busy)
+        {
+            return;
+        }
+
+        _busy = true;
+        try
+        {
+            await _form.ValidateAsync();
+            if (!_form.IsValid)
+            {
+                return;
+            }
+
+            _errors = [];
+            var result = await Api.LoginAsync(new LoginRequest(_email!.Trim(), _password!));
+            if (!result.IsSuccess)
+            {
+                _errors = result.Errors;
+            }
+            else if (await Session.SignInAsync(result.Value.AccessToken))
+            {
+                Navigation.NavigateTo("trips");
+            }
+            else
+            {
+                _errors = [ClientErrors.SessionNotStarted];
+            }
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
+}

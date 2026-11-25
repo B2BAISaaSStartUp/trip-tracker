@@ -1,0 +1,111 @@
+@page "/register"
+@using System.ComponentModel.DataAnnotations
+@using TripTracker.SharedKernel.TripTracker.Identity
+@inject IApiClient Api
+@inject IAuthSession Session
+@inject NavigationManager Navigation
+
+<PageTitle>Register - TripTracker</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.ExtraSmall" Class="px-0">
+    <MudText Typo="Typo.h4" HtmlTag="h1" GutterBottom="true">Register</MudText>
+    <ErrorAlert Errors="_errors" />
+    <MudForm @ref="_form" OnEnterPressed="SubmitAsync" Spacing="3">
+        <MudTextField @bind-Value="_displayName"
+                      Label="Name"
+                      MaxLength="DisplayNameMaxLength"
+                      Required="true"
+                      RequiredError="Name is required"
+                      autocomplete="name" />
+        <MudTextField @bind-Value="_email"
+                      Label="E-mail"
+                      InputType="InputType.Email"
+                      MaxLength="EmailMaxLength"
+                      Required="true"
+                      RequiredError="E-mail is required"
+                      Validation="@(new Func<string?, string?>(ValidateEmail))"
+                      autocomplete="email" />
+        <MudTextField @bind-Value="_password"
+                      Label="Password"
+                      InputType="InputType.Password"
+                      MaxLength="PasswordMaxLength"
+                      HelperText="At least 8 characters, with a lowercase letter and a digit"
+                      HelperTextOnFocus="false"
+                      Required="true"
+                      RequiredError="Password is required"
+                      Validation="@(new Func<string?, string?>(ValidatePassword))"
+                      autocomplete="new-password" />
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   FullWidth="true"
+                   Disabled="_busy"
+                   OnClick="SubmitAsync">
+            Register
+        </MudButton>
+    </MudForm>
+    <MudText Class="mt-4">Already registered? <MudLink Href="login" Underline="Underline.Always">Log in</MudLink></MudText>
+</MudContainer>
+
+@code {
+    // The API's limits and password policy. The API checks them again and has the final say.
+    private const int DisplayNameMaxLength = 100;
+    private const int EmailMaxLength = 256;
+    private const int PasswordMinLength = 8;
+    private const int PasswordMaxLength = 128;
+
+    private MudForm _form = default!;
+    private string? _displayName;
+    private string? _email;
+    private string? _password;
+    private bool _busy;
+    private IReadOnlyList<ApiError> _errors = [];
+
+    private static string? ValidateEmail(string? email) =>
+        string.IsNullOrWhiteSpace(email) || new EmailAddressAttribute().IsValid(email.Trim())
+            ? null
+            : "Enter a valid e-mail address";
+
+    private static string? ValidatePassword(string? password) =>
+        string.IsNullOrEmpty(password)
+        || (password.Length >= PasswordMinLength && password.Any(char.IsAsciiLetterLower) && password.Any(char.IsDigit))
+            ? null
+            : "Use at least 8 characters, with a lowercase letter and a digit";
+
+    private async Task SubmitAsync()
+    {
+        if (_busy)
+        {
+            return;
+        }
+
+        _busy = true;
+        try
+        {
+            await _form.ValidateAsync();
+            if (!_form.IsValid)
+            {
+                return;
+            }
+
+            _errors = [];
+            var request = new RegisterRequest(_email!.Trim(), _password!, _displayName!.Trim());
+            var result = await Api.RegisterAsync(request);
+            if (!result.IsSuccess)
+            {
+                _errors = result.Errors;
+            }
+            else if (await Session.SignInAsync(result.Value.AccessToken))
+            {
+                Navigation.NavigateTo("trips");
+            }
+            else
+            {
+                _errors = [ClientErrors.SessionNotStarted];
+            }
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
+}
