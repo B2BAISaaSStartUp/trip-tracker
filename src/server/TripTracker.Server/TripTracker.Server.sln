@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.10.12224.181 stable
+VisualStudioVersion = 18.10.12224.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripTracker.SharedKernel", "TripTracker.SharedKernel\TripTracker.SharedKernel.csproj", "{48AAFB2F-5F79-46C2-AEE8-025968FD60BB}"
 EndProject
@@ -16,6 +16,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripTracker.Identity", "Modules\Identity\TripTracker.Identity.csproj", "{FA141B2F-32A5-46FF-8C2A-1C996896AAE6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripTracker.Identity.Tests", "..\..\..\tests\TripTracker.Identity.Tests\TripTracker.Identity.Tests.csproj", "{5DA2C313-C459-31EA-3F38-5B1BB8207E5D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripTracker.Photos.Tests", "..\..\..\tests\TripTracker.Photos.Tests\TripTracker.Photos.Tests.csproj", "{FD516969-68A6-9796-15EA-5E57BDACA6A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripTracker.Photos", "Modules\Photos\TripTracker.Photos.csproj", "{B80DDFCB-6D5A-6A60-2232-ABCB8EEB3C04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +55,14 @@ Global
 		{5DA2C313-C459-31EA-3F38-5B1BB8207E5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DA2C313-C459-31EA-3F38-5B1BB8207E5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DA2C313-C459-31EA-3F38-5B1BB8207E5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD516969-68A6-9796-15EA-5E57BDACA6A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD516969-68A6-9796-15EA-5E57BDACA6A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD516969-68A6-9796-15EA-5E57BDACA6A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD516969-68A6-9796-15EA-5E57BDACA6A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B80DDFCB-6D5A-6A60-2232-ABCB8EEB3C04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B80DDFCB-6D5A-6A60-2232-ABCB8EEB3C04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B80DDFCB-6D5A-6A60-2232-ABCB8EEB3C04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B80DDFCB-6D5A-6A60-2232-ABCB8EEB3C04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
