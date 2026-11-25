@@ -26,6 +26,7 @@ public record Error
     public static Error Conflict(string code, string message) => new(code, message, ErrorType.CONFLICT);
     public static Error Internal(string code, string message) => new(code, message, ErrorType.INTERNAL);
     public static Error Forbidden(string code, string message) => new(code, message, ErrorType.FORBIDDEN);
+    public static Error Unauthorized(string code, string message) => new(code, message, ErrorType.UNAUTHORIZED);
     public static Error TooManyRequests(string code, string message) => new(code, message, ErrorType.TOO_MANY_REQUESTS);
 
     public string Serialize()
@@ -63,4 +64,5 @@ public enum ErrorType
     ALREADY_EXISTS,
     FORBIDDEN,
     TOO_MANY_REQUESTS,
+    UNAUTHORIZED,
 }
