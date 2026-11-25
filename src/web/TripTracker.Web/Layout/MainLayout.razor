@@ -1,0 +1,37 @@
+@inherits LayoutComponentBase
+
+<MudThemeProvider />
+<MudPopoverProvider />
+
+@* A plain "#main-content" link would resolve against <base href="/"> and leave the page, so focus is moved in code. *@
+<a class="skip-link" href="#main-content" @onclick="FocusContentAsync" @onclick:preventDefault>Skip to content</a>
+
+<MudLayout>
+    <MudAppBar Elevation="1">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu"
+                       Color="Color.Inherit"
+                       Edge="Edge.Start"
+                       OnClick="ToggleDrawer"
+                       aria-label="Toggle navigation menu" />
+        <MudText Typo="Typo.h6" Class="ml-3">TripTracker</MudText>
+    </MudAppBar>
+    <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="1">
+        <NavMenu />
+    </MudDrawer>
+    <MudMainContent>
+        <main id="main-content" tabindex="-1" @ref="_content">
+            <MudContainer MaxWidth="MaxWidth.Large" Class="py-6">
+                @Body
+            </MudContainer>
+        </main>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    private bool _drawerOpen = true;
+    private ElementReference _content;
+
+    private void ToggleDrawer() => _drawerOpen = !_drawerOpen;
+
+    private async Task FocusContentAsync() => await _content.FocusAsync();
+}

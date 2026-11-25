@@ -1,0 +1,26 @@
+@page "/trips"
+@using TripTracker.SharedKernel.TripTracker.Trips
+
+<PageTitle>My trips - TripTracker</PageTitle>
+
+<MudText Typo="Typo.h4" HtmlTag="h1" GutterBottom="true">My trips</MudText>
+
+<MudTable Items="_trips" Hover="true" Breakpoint="Breakpoint.Sm">
+    <HeaderContent>
+        <MudTh>Title</MudTh>
+        <MudTh>Start date</MudTh>
+        <MudTh>End date</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Title">@context.Title</MudTd>
+        <MudTd DataLabel="Start date">@context.StartDate</MudTd>
+        <MudTd DataLabel="End date">@context.EndDate</MudTd>
+    </RowTemplate>
+    <NoRecordsContent>
+        <MudText>Your trips will appear here.</MudText>
+    </NoRecordsContent>
+</MudTable>
+
+@code {
+    private readonly IReadOnlyList<TripDto> _trips = [];
+}
