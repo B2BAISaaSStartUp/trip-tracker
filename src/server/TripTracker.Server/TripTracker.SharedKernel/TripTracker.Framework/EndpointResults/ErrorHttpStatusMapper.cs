@@ -12,6 +12,7 @@ public static class ErrorHttpStatusMapper
             ErrorType.NOT_FOUND => StatusCodes.Status404NotFound,
             ErrorType.CONFLICT or ErrorType.ALREADY_EXISTS => StatusCodes.Status409Conflict,
             ErrorType.FORBIDDEN => StatusCodes.Status403Forbidden,
+            ErrorType.UNAUTHORIZED => StatusCodes.Status401Unauthorized,
             ErrorType.TOO_MANY_REQUESTS => StatusCodes.Status429TooManyRequests,
             _ => StatusCodes.Status500InternalServerError
         };
