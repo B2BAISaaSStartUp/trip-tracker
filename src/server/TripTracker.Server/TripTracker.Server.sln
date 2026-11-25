@@ -13,6 +13,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripTracker.Trips", "Module
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripTracker.Trips.Tests", "..\..\..\tests\TripTracker.Trips.Tests\TripTracker.Trips.Tests.csproj", "{5B1E6C3A-9D42-4F0E-8A57-3C6D2E91B7F4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripTracker.Identity", "Modules\Identity\TripTracker.Identity.csproj", "{FA141B2F-32A5-46FF-8C2A-1C996896AAE6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripTracker.Photos", "Modules\Photos\TripTracker.Photos.csproj", "{ADA54FDF-9E00-4EFC-8BCD-F0E0A72F2E63}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripTracker.Identity.Tests", "..\..\..\tests\TripTracker.Identity.Tests\TripTracker.Identity.Tests.csproj", "{B406B647-B1AF-48D9-96DB-F91D873BC8F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripTracker.Photos.Tests", "..\..\..\tests\TripTracker.Photos.Tests\TripTracker.Photos.Tests.csproj", "{F14254BA-B6E2-41BA-A1CA-81B699D016B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +47,22 @@ Global
 		{2EA9D494-0CEE-400D-BF83-3E06204E6A29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EA9D494-0CEE-400D-BF83-3E06204E6A29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EA9D494-0CEE-400D-BF83-3E06204E6A29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA141B2F-32A5-46FF-8C2A-1C996896AAE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA141B2F-32A5-46FF-8C2A-1C996896AAE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA141B2F-32A5-46FF-8C2A-1C996896AAE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA141B2F-32A5-46FF-8C2A-1C996896AAE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADA54FDF-9E00-4EFC-8BCD-F0E0A72F2E63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADA54FDF-9E00-4EFC-8BCD-F0E0A72F2E63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADA54FDF-9E00-4EFC-8BCD-F0E0A72F2E63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADA54FDF-9E00-4EFC-8BCD-F0E0A72F2E63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B406B647-B1AF-48D9-96DB-F91D873BC8F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B406B647-B1AF-48D9-96DB-F91D873BC8F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B406B647-B1AF-48D9-96DB-F91D873BC8F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B406B647-B1AF-48D9-96DB-F91D873BC8F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F14254BA-B6E2-41BA-A1CA-81B699D016B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F14254BA-B6E2-41BA-A1CA-81B699D016B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F14254BA-B6E2-41BA-A1CA-81B699D016B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F14254BA-B6E2-41BA-A1CA-81B699D016B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
