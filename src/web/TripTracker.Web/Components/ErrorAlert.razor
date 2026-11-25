@@ -1,0 +1,15 @@
+@if (Errors.Count > 0)
+{
+    <MudAlert Severity="Severity.Error" Class="mb-4" role="alert">
+        @foreach (var error in Errors)
+        {
+            <div>@error.Message</div>
+        }
+    </MudAlert>
+}
+
+@code {
+    /// <summary>The errors to show; nothing is rendered when empty.</summary>
+    [Parameter, EditorRequired]
+    public IReadOnlyList<ApiError> Errors { get; set; } = [];
+}

@@ -1,0 +1,6 @@
+@inject NavigationManager Navigation
+
+@code {
+    // Replaces the history entry, so that Back does not return to the protected page and bounce again.
+    protected override void OnInitialized() => Navigation.NavigateTo("login", replace: true);
+}

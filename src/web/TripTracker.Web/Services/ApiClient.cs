@@ -12,6 +12,8 @@ namespace TripTracker.Web.Services;
 /// <summary><see cref="IApiClient"/> over <see cref="HttpClient"/>: sends a request and unwraps the envelope.</summary>
 public sealed class ApiClient : IApiClient
 {
+    private const string ServerInternalCode = "server.internal";
+
     private readonly HttpClient _http;
 
     /// <summary>Creates a client. <paramref name="http"/> must have the API address as its base address.</summary>
@@ -81,7 +83,7 @@ public sealed class ApiClient : IApiClient
         var envelope = Parse<T>(body);
         if (envelope?.Errors is { Count: > 0 } errors)
         {
-            return ApiResult<T>.Failure(errors);
+            return ApiResult<T>.Failure(errors.Select(Sanitize).ToList());
         }
 
         var isSuccessStatus = (int)status is >= 200 and < 300;
@@ -89,6 +91,15 @@ public sealed class ApiClient : IApiClient
             ? ApiResult<T>.Success(value)
             : ApiResult<T>.Failure([FromStatus(status)]);
     }
+
+    /// <summary>
+    /// For an unexpected failure the API puts the raw exception message into <c>server.internal</c>
+    /// (CLAUDE.md, section 7). It is replaced here, so that it can never reach the UI.
+    /// </summary>
+    private static ApiError Sanitize(ApiError error) =>
+        error.Code == ServerInternalCode
+            ? error with { Message = "Something went wrong on the server. Try again later." }
+            : error;
 
     /// <summary>Returns <c>null</c> for a body that is empty or is not an envelope.</summary>
     private static ApiEnvelope<T>? Parse<T>(string body)
