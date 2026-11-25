@@ -19,6 +19,17 @@ h1:focus {
   top: 8px;
 }
 
+/* A long title without spaces must wrap instead of widening a narrow screen. On narrow screens each cell is a
+   row of label and value, where only the value may give up space. */
+.trips-table td::before {
+  flex-shrink: 0;
+}
+
+.trip-title {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 .app-loading {
   padding: 24px;
   font-family: Helvetica, Arial, sans-serif;

@@ -1,27 +1,77 @@
 @page "/trips"
 @attribute [Authorize]
+@using System.Globalization
 @using TripTracker.SharedKernel.TripTracker.Trips
+@inject IApiClient Api
 
 <PageTitle>My trips - TripTracker</PageTitle>
 
 <MudText Typo="Typo.h4" HtmlTag="h1" GutterBottom="true">My trips</MudText>
 
-<MudTable Items="_trips" Hover="true" Breakpoint="Breakpoint.Sm">
-    <HeaderContent>
-        <MudTh>Title</MudTh>
-        <MudTh>Start date</MudTh>
-        <MudTh>End date</MudTh>
-    </HeaderContent>
-    <RowTemplate>
-        <MudTd DataLabel="Title">@context.Title</MudTd>
-        <MudTd DataLabel="Start date">@context.StartDate</MudTd>
-        <MudTd DataLabel="End date">@context.EndDate</MudTd>
-    </RowTemplate>
-    <NoRecordsContent>
-        <MudText>Your trips will appear here.</MudText>
-    </NoRecordsContent>
-</MudTable>
+@if (_loading)
+{
+    <MudProgressCircular Indeterminate="true" aria-label="Loading your trips" />
+}
+else if (_errors.Count > 0)
+{
+    <ErrorAlert Errors="_errors" />
+    <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="LoadAsync">Try again</MudButton>
+}
+else if (_trips.Count == 0)
+{
+    <MudText Typo="Typo.h6" HtmlTag="h2">No trips yet</MudText>
+    <MudText>Trips you create in the mobile app appear here.</MudText>
+}
+else
+{
+    <MudTable Items="_trips" Hover="true" Breakpoint="Breakpoint.Sm" Class="trips-table">
+        <HeaderContent>
+            <MudTh>Title</MudTh>
+            <MudTh>Start date</MudTh>
+            <MudTh>End date</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Title"><span class="trip-title">@context.Title</span></MudTd>
+            <MudTd DataLabel="Start date">@FormatDate(context.StartDate)</MudTd>
+            <MudTd DataLabel="End date">@FormatDate(context.EndDate)</MudTd>
+        </RowTemplate>
+    </MudTable>
+
+    @if (_totalCount > _trips.Count)
+    {
+        <MudText Typo="Typo.body2" Class="mt-2">Showing the newest @_trips.Count of @_totalCount trips.</MudText>
+    }
+}
 
 @code {
-    private readonly IReadOnlyList<TripDto> _trips = [];
+    private bool _loading = true;
+    private IReadOnlyList<TripDto> _trips = [];
+    private long _totalCount;
+    private IReadOnlyList<ApiError> _errors = [];
+
+    protected override Task OnInitializedAsync() => LoadAsync();
+
+    // The English UI must not take month names from the browser's language.
+    private static string FormatDate(DateOnly date) => date.ToString("d MMM yyyy", CultureInfo.InvariantCulture);
+
+    // A 401 needs no handling here: BearerTokenHandler ends the session, which redirects to the login page.
+    private async Task LoadAsync()
+    {
+        _loading = true;
+        _errors = [];
+
+        // The default query is the first page, newest first.
+        var result = await Api.GetTripsAsync(new ListTripsQuery());
+        if (result.IsSuccess)
+        {
+            _trips = result.Value.Items;
+            _totalCount = result.Value.TotalCount;
+        }
+        else
+        {
+            _errors = result.Errors;
+        }
+
+        _loading = false;
+    }
 }
