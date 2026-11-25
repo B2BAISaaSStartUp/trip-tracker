@@ -1,0 +1,117 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# A newer commit on a pull request replaces the run in progress. Runs on main are never cancelled in progress.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+# The job names are the status check names used by branch protection: do not rename them.
+jobs:
+  server:
+    name: server
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SOLUTION: src/server/TripTracker.Server/TripTracker.Server.sln
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-server-${{ hashFiles('**/*.csproj', '**/Directory.Packages.props', '**/Directory.Build.props', '**/global.json') }}
+          restore-keys: nuget-${{ runner.os }}-server-
+
+      # The runner image also has newer SDKs, and dotnet picks the newest one unless a global.json limits it.
+      # The file exists only on the runner. A global.json committed to the repository takes precedence.
+      - name: Select the .NET 9 SDK
+        if: hashFiles('global.json') == ''
+        run: echo '{"sdk":{"version":"9.0.100","rollForward":"latestFeature"}}' > global.json
+
+      - name: Show the .NET SDK version
+        run: dotnet --version
+
+      - name: Restore
+        run: dotnet restore "$SOLUTION"
+
+      - name: Build
+        run: dotnet build "$SOLUTION" --no-restore --configuration Release
+
+      - name: Test
+        run: dotnet test "$SOLUTION" --no-build --configuration Release --logger trx --results-directory TestResults
+
+      - name: Upload test results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: server-test-results-${{ github.run_attempt }}
+          path: TestResults/*.trx
+          if-no-files-found: ignore
+          retention-days: 7
+
+  web:
+    name: web
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SOLUTION: src/web/TripTracker.Web.sln
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-web-${{ hashFiles('**/*.csproj', '**/Directory.Packages.props', '**/Directory.Build.props', '**/global.json') }}
+          restore-keys: nuget-${{ runner.os }}-web-
+
+      # Same SDK selection as in the server job.
+      - name: Select the .NET 9 SDK
+        if: hashFiles('global.json') == ''
+        run: echo '{"sdk":{"version":"9.0.100","rollForward":"latestFeature"}}' > global.json
+
+      - name: Show the .NET SDK version
+        run: dotnet --version
+
+      - name: Restore
+        run: dotnet restore "$SOLUTION"
+
+      - name: Build
+        run: dotnet build "$SOLUTION" --no-restore --configuration Release
+
+      - name: Test
+        run: dotnet test "$SOLUTION" --no-build --configuration Release --logger trx --results-directory TestResults
+
+      - name: Upload test results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-test-results-${{ github.run_attempt }}
+          path: TestResults/*.trx
+          if-no-files-found: ignore
+          retention-days: 7
+
+  # Flutter: add a separate "mobile" job here when the Flutter project exists in src/mobile/trip_tracker_app.
