@@ -1,8 +1,11 @@
+using TripTracker.Api.Hooks;
+using TripTracker.Identity;
 using TripTracker.SharedKernel.TripTracker.Core;
 using TripTracker.SharedKernel.TripTracker.Framework;
 using TripTracker.SharedKernel.TripTracker.Framework.EndpointResults;
 using TripTracker.SharedKernel.TripTracker.Framework.Middlewares;
 using TripTracker.Trips;
+using TripTracker.Trips.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +22,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUser, CurrentUser>();
 builder.Services.AddAuthorization();
 builder.Services.AddTripsModule(builder.Configuration);
+builder.Services.AddIdentityModule(builder.Configuration);
 
 var app = builder.Build();
 
@@ -32,6 +36,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
