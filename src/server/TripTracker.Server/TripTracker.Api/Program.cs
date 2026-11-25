@@ -1,3 +1,4 @@
+using TripTracker.Api.Cors;
 using TripTracker.Api.Hooks;
 using TripTracker.Identity;
 using TripTracker.Photos;
@@ -25,6 +26,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddTripsModule(builder.Configuration);
 builder.Services.AddIdentityModule(builder.Configuration);
 builder.Services.AddPhotosModule(builder.Configuration);
+builder.Services.AddWebClientCors(builder.Configuration);
 
 // Deleting a trip also deletes its photos (FR-07).
 builder.Services.AddScoped<ITripDeletionHook, PhotoTripDeletionHook>();
@@ -38,6 +40,10 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+// Before HTTPS redirection and authentication: a preflight request must not be redirected and carries no token,
+// and 401 responses need the CORS headers too, or the web client cannot read them.
+app.UseCors(WebClientCors.PolicyName);
 
 app.UseHttpsRedirection();
 
