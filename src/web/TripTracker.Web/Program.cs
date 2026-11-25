@@ -8,7 +8,8 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddSingleton(ApiSettings.FromConfiguration(builder.Configuration));
+var api = ApiSettings.FromConfiguration(builder.Configuration);
+builder.Services.AddHttpClient<IApiClient, ApiClient>(client => client.BaseAddress = api.BaseUrl);
 builder.Services.AddMudServices();
 
 await builder.Build().RunAsync();
