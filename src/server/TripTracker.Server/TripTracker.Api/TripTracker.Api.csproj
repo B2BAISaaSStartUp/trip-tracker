@@ -17,6 +17,7 @@
     <ProjectReference Include="..\TripTracker.SharedKernel\TripTracker.SharedKernel.csproj" />
     <ProjectReference Include="..\Modules\Trips\TripTracker.Trips.csproj" />
     <ProjectReference Include="..\Modules\Tracking\TripTracker.Tracking.csproj" />
+    <ProjectReference Include="..\Modules\Markers\TripTracker.Markers.csproj" />
   </ItemGroup>
 
 </Project>
