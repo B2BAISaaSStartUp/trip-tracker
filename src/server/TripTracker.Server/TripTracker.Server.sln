@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripTracker.Tracking", "Mod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripTracker.Tracking.Tests", "..\..\..\tests\TripTracker.Tracking.Tests\TripTracker.Tracking.Tests.csproj", "{AC0D54E6-3959-4925-A487-4083BBAB6A3C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripTracker.Markers", "Modules\Markers\TripTracker.Markers.csproj", "{DF0E55DF-8ADA-4E31-9FE7-DE02FC4AE25B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{AC0D54E6-3959-4925-A487-4083BBAB6A3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC0D54E6-3959-4925-A487-4083BBAB6A3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC0D54E6-3959-4925-A487-4083BBAB6A3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF0E55DF-8ADA-4E31-9FE7-DE02FC4AE25B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF0E55DF-8ADA-4E31-9FE7-DE02FC4AE25B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF0E55DF-8ADA-4E31-9FE7-DE02FC4AE25B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF0E55DF-8ADA-4E31-9FE7-DE02FC4AE25B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
