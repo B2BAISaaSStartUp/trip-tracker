@@ -6,6 +6,7 @@ using TripTracker.SharedKernel.TripTracker.Core;
 using TripTracker.SharedKernel.TripTracker.Framework;
 using TripTracker.SharedKernel.TripTracker.Framework.EndpointResults;
 using TripTracker.SharedKernel.TripTracker.Framework.Middlewares;
+using TripTracker.Tracking;
 using TripTracker.Trips;
 using TripTracker.Trips.Contracts;
 
@@ -26,10 +27,14 @@ builder.Services.AddAuthorization();
 builder.Services.AddTripsModule(builder.Configuration);
 builder.Services.AddIdentityModule(builder.Configuration);
 builder.Services.AddPhotosModule(builder.Configuration);
+builder.Services.AddTrackingModule(builder.Configuration);
 builder.Services.AddWebClientCors(builder.Configuration);
 
 // Deleting a trip also deletes its photos (FR-07).
 builder.Services.AddScoped<ITripDeletionHook, PhotoTripDeletionHook>();
+
+// Deleting a trip also deletes its route (FR-07).
+builder.Services.AddScoped<ITripDeletionHook, TrackingTripDeletionHook>();
 
 var app = builder.Build();
 
